@@ -30,6 +30,15 @@ func main() {
 		printUsage()
 		os.Exit(1)
 	}
+
+	ret, err := createJWT(*issuer, *expires, *privateKeyFile)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(2)
+	}
+
+	fmt.Println(ret)
+	os.Exit(0)
 }
 
 func printUsage() {
