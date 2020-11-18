@@ -8,12 +8,19 @@ import (
 
 func main() {
 	privateKeyFile := flag.String("private", "", "Private Key file to sign JWT (required)")
+	issuer := flag.String("issuer", "", "issuer string (required)")
 	expires := flag.Int("expires", 30, "Time to expiration (in minutes, 30 minutes if not specified)")
 
 	flag.Parse()
 
 	if len(*privateKeyFile) == 0 {
 		fmt.Println("Private Key not specified.")
+		printUsage()
+		os.Exit(1)
+	}
+
+	if len(*issuer) == 0 {
+		fmt.Println("issuer is required.")
 		printUsage()
 		os.Exit(1)
 	}
@@ -26,6 +33,6 @@ func main() {
 }
 
 func printUsage() {
-	fmt.Printf("usage : %s -expires [expires] -private [private]\n", os.Args[0])
+	fmt.Printf("usage : %s {-expires [expires]} -issuer [issuer] -private [private]\n", os.Args[0])
 	flag.PrintDefaults()
 }
