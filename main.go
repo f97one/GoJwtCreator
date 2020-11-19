@@ -21,26 +21,26 @@ func main() {
 	}
 
 	if len(*privateKeyFile) == 0 {
-		fmt.Println("Private Key not specified.")
+		_, _ = fmt.Fprintln(os.Stderr, "Private Key not specified.")
 		printUsage()
 		os.Exit(1)
 	}
 
 	if len(*issuer) == 0 {
-		fmt.Println("issuer is required.")
+		_, _ = fmt.Fprintln(os.Stderr, "issuer is required.")
 		printUsage()
 		os.Exit(1)
 	}
 
 	if *expires < 1 {
-		fmt.Printf("Too little expiration : %d\n", *expires)
+		_, _ = fmt.Fprintf(os.Stderr, "Too little expiration : %d\n", *expires)
 		printUsage()
 		os.Exit(1)
 	}
 
 	ret, err := createJWT(*issuer, *expires, *privateKeyFile)
 	if err != nil {
-		fmt.Println(err)
+		_, _ = fmt.Fprintln(os.Stderr, err)
 		os.Exit(2)
 	}
 
